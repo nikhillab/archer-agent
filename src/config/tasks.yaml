@@ -1,0 +1,95 @@
+# service_extraction_task:
+#   description: >
+#     Carefully review the cloud architecture diagram at {image_path_url}.
+#     Your task is ONLY to extract all AWS cloud services, components, and annotations.
+#     Classify each item into:
+#       - Provider: AWS
+#       - Service Name (e.g., EC2, Lambda, S3)
+#       - Type (Compute, Storage, Networking, Database, Security, etc.)
+#       - Metadata (optional: region, runtime, storage class, notes, etc.)
+#     Very important: Only output pure JSON format, without any extra explanation.
+
+#   expected_output: >
+#     Output a valid JSON array following these examples:
+
+#     Example 1:
+#     [
+#       {
+#         "provider": "AWS",
+#         "service": "API Gateway",
+#         "type": "Networking",
+#         "metadata": {"region": "us-east-1", "notes": "Entry point API"}
+#       },
+#       {
+#         "provider": "AWS",
+#         "service": "Lambda",
+#         "type": "Compute",
+#         "metadata": {"triggered_by": "API Gateway"}
+#       }
+#     ]
+    
+#     Remember: 
+#     - Only include AWS services.
+#     - If a service is unclear, still list it and mention "confidence": "low" in metadata.
+#     - No markdown, no commentary. Only valid JSON.
+
+#   agent: service_extractor
+#   output_file: output/service_extraction.json
+
+
+
+topology_analysis_task:
+  description: >
+    Analyze the extracted services and their connections to determine the overall network topology.
+    Identify traffic flows, critical paths, and interdependencies.
+  expected_output: >
+    A graph structure (nodes and edges) representing the system's connectivity, with annotations for data flow directions and security zones.
+    Remember:
+    - No markdown, no commentary. Only valid JSON.
+  agent: topology_analyst
+  output_file: output/topology_analysis.json
+
+best_practices_check_task:
+  description: >
+    Review the extracted services and topology against industry best practices frameworks (AWS Well-Architected, Azure Architecture Center).
+    Identify any violations or areas for improvement.
+  expected_output: >
+    A detailed list of best practice checks passed, failed, and recommendations for improvement, formatted in markdown without '```'.
+  agent: best_practices_checker
+  output_file: output/best_practices_review.md
+
+security_review_task:
+  description: >
+    Conduct a thorough security review of the architecture based on the extracted services and topology.
+    Identify vulnerabilities, insecure configurations, and missing security measures.
+  expected_output: >
+    A list of security findings and prioritized recommendations to improve security posture, formatted in markdown without '```'.
+  agent: security_reviewer
+  output_file: output/security_review.md
+
+cost_efficiency_evaluation_task:
+  description: >
+    Review the architecture for cost inefficiencies.
+    Identify over-provisioned, redundant, or overly expensive services and suggest more cost-effective alternatives.
+  expected_output: >
+    A detailed report listing potential cost optimizations with estimated savings where applicable, formatted in markdown without '```'.
+  agent: cost_efficiency_evaluator
+  output_file: output/cost_efficiency_report.md
+
+interrogation_task:
+  description: >
+    Analyze the extracted architecture information and identify any gaps, missing assumptions, or areas requiring clarification.
+    Formulate a list of precise, targeted questions for the architecture owner.
+  expected_output: >
+    A markdown-formatted list of clarification questions that must be answered before a final review can be completed, without '```'.
+  agent: interrogator
+  output_file: output/clarification_questions.md
+
+summary_generation_task:
+  description: >
+    Summarize all findings from the service extraction, topology analysis, best practices check, security review, and cost efficiency evaluation.
+    Include key risks, improvements, and outstanding questions in a clear, executive-friendly report.
+  expected_output: >
+    A complete architecture review summary document with findings, recommendations, and questions, formatted as markdown without '```'.
+  agent: summary_generator
+  output_file: output/architecture_review_summary.md

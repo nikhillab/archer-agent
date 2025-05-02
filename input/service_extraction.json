@@ -1,0 +1,101 @@
+{
+  "services": [
+    {
+      "provider": "AWS",
+      "service": "Lambda",
+      "type": "Compute",
+      "metadata": {}
+    },
+    {
+      "provider": "AWS",
+      "service": "Simple Storage Service (S3)",
+      "type": "Storage",
+      "metadata": {
+        "storage_class": "unknown",
+        "confidence": "low"
+      }
+    },
+    {
+      "provider": "AWS",
+      "service": "DynamoDB",
+      "type": "Database",
+      "metadata": {}
+    },
+    {
+      "provider": "AWS",
+      "service": "Step Functions",
+      "type": "Other",
+      "metadata": {}
+    },
+    {
+      "provider": "AWS",
+      "service": "Fargate",
+      "type": "Compute",
+      "metadata": {}
+    },
+    {
+      "provider": "AWS",
+      "service": "Batch",
+      "type": "Compute",
+      "metadata": {}
+    },
+    {
+      "provider": "AWS",
+      "service": "CloudWatch",
+      "type": "Monitoring",
+      "metadata": {}
+    }
+  ],
+  "connections": [
+    {
+      "source": "Client",
+      "target": "Simple Storage Service (S3)",
+      "relationship": "connects_to"
+    },
+    {
+      "source": "Simple Storage Service (S3)",
+      "target": "Lambda",
+      "relationship": "triggers"
+    },
+    {
+      "source": "Lambda",
+      "target": "DynamoDB",
+      "relationship": "connects_to"
+    },
+    {
+      "source": "DynamoDB",
+      "target": "Lambda",
+      "relationship": "triggers"
+    },
+    {
+      "source": "Lambda",
+      "target": "Step Functions",
+      "relationship": "invokes"
+    },
+    {
+      "source": "Step Functions",
+      "target": "Fargate",
+      "relationship": "invokes"
+    },
+    {
+      "source": "Fargate",
+      "target": "Batch",
+      "relationship": "invokes"
+    },
+    {
+      "source": "Fargate",
+      "target": "CloudWatch",
+      "relationship": "monitored_by"
+    },
+    {
+      "source": "Batch",
+      "target": "CloudWatch",
+      "relationship": "monitored_by"
+    },
+    {
+      "source": "DynamoDB",
+      "target": "CloudWatch",
+      "relationship": "monitored_by"
+    }
+  ]
+}

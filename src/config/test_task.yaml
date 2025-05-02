@@ -1,0 +1,89 @@
+topology_analysis_task:
+  description: >
+    Analyze the extracted cloud services and their interconnections.
+    Identify the architectural layers (e.g. Compute, Storage, Networking, Database, Security, etc.), communication patterns, bottlenecks,
+    and unclear flows.
+    Provide an overview of the topology structure in json.
+    {extracted_input_context}
+    Here is ascii format of architecture.
+    {ascii_input_context}
+  expected_output: >
+    A markdown report containing:
+    - Topology overview (grouped by layers)
+    - Notable patterns (fan-out, single points of failure, etc.)
+    - Weak or unclear parts of the flow
+  agent: topology_analyst
+  output_file: output/topology_analysis.md
+
+best_practices_check_task:
+  description: >
+    Evaluate the extracted cloud architecture design against AWS best practices.
+    Identify any issues in scalability, reliability, cost optimization, or operational excellence.
+    Provide an overview of the topology structure in json.
+    {extracted_input_context}
+    Here is ascii format of architecture.
+    {ascii_input_context}
+  expected_output: >
+    A markdown checklist of:
+    - Best practices followed
+    - Best practices violated
+    - Suggestions for improvement
+  agent: best_practices_checker
+  output_file: output/best_practices_review.md
+
+security_review_task:
+  description: >
+    Review the services and their interactions for any potential security misconfigurations.
+    Focus on access control, public exposure, encryption, and least-privilege design.
+    Provide an overview of the topology structure in json.
+    {extracted_input_context}
+    Here is ascii format of architecture.
+    {ascii_input_context}
+  expected_output: >
+    A markdown security report outlining:
+    - Vulnerabilities or risky configurations
+    - Services that require more secure settings
+    - Remediation suggestions
+  agent: security_reviewer
+  output_file: output/security_review.md
+
+cost_analysis_task:
+  description: >
+    Analyze the architecture for potential cost inefficiencies.
+    Identify services that may result in high monthly bills and where overprovisioning or redundancy exists.
+    Provide an overview of the topology structure in json.
+    {extracted_input_context}
+    Here is ascii format of architecture.
+    {ascii_input_context}
+  expected_output: >
+    A markdown report detailing:
+    - Cost-heavy components
+    - Opportunities for optimization
+    - Right-sizing recommendations
+  agent: cost_efficiency_evaluator
+  output_file: output/cost_analysis.md
+
+interrogation_task:
+  description: >
+    Examine the extracted architecture for ambiguities or missing pieces.
+    Generate a list of specific, targeted questions that need clarification from the designer.
+    Provide an overview of the topology structure in json.
+    {extracted_input_context}
+    Here is ascii format of architecture.
+    {ascii_input_context}
+  expected_output: >
+    A list of questions categorized by topic (e.g., networking, security, redundancy).
+  agent: interrogator
+  output_file: output/questions.md
+
+summary_task:
+  description: >
+    Summarize the findings from all reviewers into one cohesive architecture report.
+    Include key observations, common issues, and top recommendations.
+  expected_output: >
+    A structured markdown report with:
+    - Summary of findings by agent
+    - Overall evaluation
+    - Final recommendations and next steps
+  agent: summary_generator
+  output_file: output/final_summary.md

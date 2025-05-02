@@ -1,0 +1,389 @@
+{
+    "services": [
+      {
+        "provider": "AWS",
+        "service": "EC2",
+        "type": "Compute",
+        "metadata": {
+          "region": "unknown",
+          "availability_zone": "unknown",
+          "instance_type": "unknown",
+          "confidence": "low"
+        }
+      },
+      {
+        "provider": "AWS",
+        "service": "S3",
+        "type": "Storage",
+        "metadata": {
+          "region": "unknown",
+          "confidence": "low"
+        }
+      },
+      {
+        "provider": "AWS",
+        "service": "Lambda",
+        "type": "Compute",
+        "metadata": {
+          "region": "unknown",
+          "confidence": "low"
+        }
+      },
+      {
+        "provider": "AWS",
+        "service": "VPC",
+        "type": "Networking",
+        "metadata": {
+          "region": "unknown",
+          "CIDR": "unknown",
+          "confidence": "low"
+        }
+      },
+      {
+        "provider": "AWS",
+        "service": "Subnet",
+        "type": "Networking",
+        "metadata": {
+          "region": "unknown",
+          "CIDR": "unknown",
+          "availability_zone": "unknown",
+          "confidence": "low"
+        }
+      },
+      {
+        "provider": "AWS",
+        "service": "Internet Gateway",
+        "type": "Networking",
+        "metadata": {
+          "region": "unknown",
+          "confidence": "low"
+        }
+      },
+      {
+        "provider": "AWS",
+        "service": "NAT Gateway",
+        "type": "Networking",
+        "metadata": {
+          "region": "unknown",
+          "confidence": "low"
+        }
+      },
+      {
+        "provider": "AWS",
+        "service": "Security Group",
+        "type": "Security",
+        "metadata": {
+          "region": "unknown",
+          "security_group_ids": "unknown",
+          "confidence": "low"
+        }
+      },
+      {
+        "provider": "AWS",
+        "service": "IAM",
+        "type": "Security",
+        "metadata": {
+          "region": "unknown",
+          "confidence": "low"
+        }
+      },
+      {
+        "provider": "AWS",
+        "service": "CloudWatch",
+        "type": "Monitoring",
+        "metadata": {
+          "region": "unknown",
+          "confidence": "low"
+        }
+      },
+      {
+        "provider": "AWS",
+        "service": "VPC Flow Logs",
+        "type": "Monitoring",
+        "metadata": {
+          "region": "unknown",
+          "confidence": "low"
+        }
+      }
+    ],
+    "connections": [
+      {
+        "source": "EC2",
+        "target": "S3",
+        "relationship": "hosted_on"
+      },
+      {
+        "source": "Lambda",
+        "target": "S3",
+        "relationship": "writes_to"
+      },
+      {
+        "source": "EC2",
+        "target": "Lambda",
+        "relationship": "invokes"
+      },
+      {
+        "source": "Lambda",
+        "target": "VPC Flow Logs",
+        "relationship": "monitored_by"
+      },
+      {
+        "source": "VPC Flow Logs",
+        "target": "CloudWatch",
+        "relationship": "sent_to"
+      }
+    ]
+  }
+
+----------------------------------------
+{
+    "services": [
+      {
+        "provider": "AWS",
+        "service": "API Gateway",
+        "type": "Networking",
+        "metadata": {
+          "purpose": "Invoke Lambda function via HTTP"
+        }
+      },
+      {
+        "provider": "AWS",
+        "service": "Lambda",
+        "type": "Compute",
+        "metadata": {
+          "runtime": "unknown",
+          "handler": "Lambda function"
+        }
+      },
+      {
+        "provider": "AWS",
+        "service": "S3",
+        "type": "Storage",
+        "metadata": {
+          "confidence": "low"
+        }
+      },
+      {
+        "provider": "AWS",
+        "service": "CloudWatch",
+        "type": "Monitoring",
+        "metadata": {}
+      }
+    ],
+    "connections": [
+      {
+        "source": "API Gateway",
+        "target": "Lambda",
+        "relationship": "invokes"
+      },
+      {
+        "source": "Lambda",
+        "target": "S3",
+        "relationship": "connects_to"
+      },
+      {
+        "source": "Lambda",
+        "target": "CloudWatch",
+        "relationship": "monitored_by"
+      }
+    ]
+  }
+----------------------------------------------------------------------------------------
+{
+  "services": [
+    {
+      "provider": "AWS",
+      "service": "VPC",
+      "type": "Networking",
+      "metadata": {
+        "CIDR": "172.16.0.0/16"
+      }
+    },
+    {
+      "provider": "AWS",
+      "service": "Subnet",
+      "type": "Networking",
+      "metadata": {
+        "subnet_type": "Public",
+        "availability_zone": "Availability Zone 1"
+      }
+    },
+    {
+      "provider": "AWS",
+      "service": "Subnet",
+      "type": "Networking",
+      "metadata": {
+        "subnet_type": "Public",
+        "availability_zone": "Availability Zone 2"
+      }
+    },
+    {
+      "provider": "AWS",
+      "service": "Subnet",
+      "type": "Networking",
+      "metadata": {
+        "subnet_type": "Private",
+        "availability_zone": "Availability Zone 1"
+      }
+    },
+    {
+      "provider": "AWS",
+      "service": "Subnet",
+      "type": "Networking",
+      "metadata": {
+        "subnet_type": "Private",
+        "availability_zone": "Availability Zone 2"
+      }
+    },
+    {
+      "provider": "AWS",
+      "service": "Subnet",
+      "type": "Networking",
+      "metadata": {
+        "subnet_type": "Private",
+        "availability_zone": "Availability Zone 1"
+      }
+    },
+    {
+      "provider": "AWS",
+      "service": "Subnet",
+      "type": "Networking",
+      "metadata": {
+        "subnet_type": "Private",
+        "availability_zone": "Availability Zone 2"
+      }
+    },
+    {
+      "provider": "AWS",
+      "service": "EC2",
+      "type": "Compute",
+      "metadata": {
+        "deployment": "Auto Scaling Group",
+        "subnet_type": "Public"
+      }
+    },
+    {
+      "provider": "AWS",
+      "service": "EC2",
+      "type": "Compute",
+      "metadata": {
+        "deployment": "Auto Scaling Group",
+        "subnet_type": "Private"
+      }
+    },
+    {
+      "provider": "AWS",
+      "service": "EC2",
+      "type": "Compute",
+      "metadata": {
+        "deployment": "Auto Scaling Group",
+        "subnet_type": "Private"
+      }
+    },
+    {
+      "provider": "AWS",
+      "service": "RDS",
+      "type": "Database",
+      "metadata": {
+        "deployment": "Multi-AZ",
+        "subnet_type": "Private"
+      }
+    },
+    {
+      "provider": "AWS",
+      "service": "Security Group",
+      "type": "Security",
+      "metadata": {
+        "scope": "Auto Scaling Group (Public Subnet)"
+      }
+    },
+    {
+      "provider": "AWS",
+      "service": "Security Group",
+      "type": "Security",
+      "metadata": {
+        "scope": "Auto Scaling Group (Private Subnet)"
+      }
+    },
+    {
+      "provider": "AWS",
+      "service": "Security Group",
+      "type": "Security",
+      "metadata": {
+        "scope": "RDS Subnet Group"
+      }
+    },
+    {
+      "provider": "AWS",
+      "service": "Internet Gateway",
+      "type": "Networking"
+    },
+    {
+      "provider": "AWS",
+      "service": "NAT Gateway",
+      "type": "Networking"
+    }
+  ],
+  "connections": [
+    {
+      "source": "VPC",
+      "target": "Public Subnet",
+      "relationship": "contains"
+    },
+    {
+      "source": "VPC",
+      "target": "Private Subnet",
+      "relationship": "contains"
+    },
+    {
+      "source": "Public Subnet",
+      "target": "EC2 (Public)",
+      "relationship": "hosts"
+    },
+    {
+      "source": "Private Subnet",
+      "target": "EC2 (Private)",
+      "relationship": "hosts"
+    },
+    {
+      "source": "Private Subnet",
+      "target": "RDS",
+      "relationship": "hosts"
+    },
+    {
+      "source": "EC2 (Public)",
+      "target": "Security Group (Public)",
+      "relationship": "secured_by"
+    },
+    {
+      "source": "EC2 (Private)",
+      "target": "Security Group (Private)",
+      "relationship": "secured_by"
+    },
+    {
+      "source": "RDS",
+      "target": "Security Group (RDS)",
+      "relationship": "secured_by"
+    },
+    {
+      "source": "Public Subnet",
+      "target": "Internet Gateway",
+      "relationship": "routes_through"
+    },
+    {
+      "source": "Private Subnet",
+      "target": "NAT Gateway",
+      "relationship": "routes_through"
+    },
+    {
+      "source": "Auto Scaling Group (Public)",
+      "target": "EC2 (Public)",
+      "relationship": "contains"
+    },
+    {
+      "source": "Auto Scaling Group (Private)",
+      "target": "EC2 (Private)",
+      "relationship": "contains"
+    }
+  ]
+}
